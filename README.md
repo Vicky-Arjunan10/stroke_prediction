@@ -2,6 +2,7 @@
 An end-to-end stroke prediction application using machine learning to assess patient risk based on health metrics
 
 Overview
+
 This project involves predicting heart-stroke prediction for men and women. The system integrates a web interface, machine learning API, database for storing predictions, scheduled jobs, data validation, and monitoring tools.
 
 Project Components
