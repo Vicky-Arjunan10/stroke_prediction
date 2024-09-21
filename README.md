@@ -75,7 +75,9 @@ airflow scheduler
 To run application
 
 The web app (Streamlit) will run on http://localhost:8501.
+
 FastAPI will serve at http://localhost:8000.
+
 Airflow will be accessible at http://localhost:8080 to manage DAGs.
 
 
