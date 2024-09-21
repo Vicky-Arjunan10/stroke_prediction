@@ -15,6 +15,7 @@ The user interface is developed using Streamlit, providing an interactive web ap
 - View past predictions based on selected date ranges and sources (web app or scheduled).
 
 3.Model Training
+
 This project uses a Logistic Regression model to predict the risk of heart stroke based on various health factors such as age, BMI, hypertension, and glucose levels. The model is trained using a dataset containing relevant health records. We implemented scaling for numerical features using StandardScaler and handled categorical variables with a LabelEncoder. The final model is saved using joblib for deployment via FastAPI. Model accuracy and performance are evaluated using standard metrics like accuracy score, confusion matrix, and classification report.
 
 Key Libraries:
