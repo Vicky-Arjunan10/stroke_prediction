@@ -53,6 +53,30 @@ Installation Software Versions
 - Airflow: `v2.6.3`
 - Python: `v3.9+`
 
+To run fast API
+
+uvicorn app.main:app --reload
+
+To run steamlit application
+
+streamlit run app.py
+
+To install and initialize airflow
+
+pip install apache-airflow
+airflow db init
+
+Start the airflow webserver and scheduler
+
+airflow webserver --port 8080
+airflow scheduler
+
+
+To run application
+
+The web app (Streamlit) will run on http://localhost:8501.
+FastAPI will serve at http://localhost:8000.
+Airflow will be accessible at http://localhost:8080 to manage DAGs.
 
 
 
