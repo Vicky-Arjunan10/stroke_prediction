@@ -8,14 +8,11 @@ import joblib
 import logging
 import pandas as pd
 
-# Initialize FastAPI app
 app = FastAPI()
 
-# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Define Pydantic models
 class HeartStrokePrediction(BaseModel):
     gender: str
     age: int
@@ -27,7 +24,6 @@ class HeartStrokePrediction(BaseModel):
 class PredictionRequest(BaseModel):
     data: Union[HeartStrokePrediction, List[HeartStrokePrediction]]  # Accepts either a single prediction or a list
 
-# Load models and scalers
 le = joblib.load('Models/label_encoder.joblib')
 scaler = joblib.load('Models/scaler.joblib')
 model = joblib.load('Models/logistic_regression_model.joblib')
@@ -63,16 +59,16 @@ def insert_data(data: HeartStrokePrediction, result: str, source: str):
 def predict(request: PredictionRequest):
     if isinstance(request.data, list):
         # Multi-prediction
-        dict_data = [row.dict() for row in request.data]
+        dict_data = [row.model_dump() for row in request.data]
         input_data = pd.DataFrame(dict_data)
         predictions = preprocess_and_predict(input_data)
 
         for i in range(len(request.data)):
-            insert_data(request.data[i], predictions[i], 'Scheduled')
+            insert_data(request.data[i], predictions[i], 'webapp')
         return predictions
     else:
         # Single prediction
-        dict_data = request.data.dict()
+        dict_data = request.data.model_dump()
         input_data = pd.DataFrame([dict_data])
         predictions = preprocess_and_predict(input_data)
         insert_data(request.data, predictions[0], 'webapp')
