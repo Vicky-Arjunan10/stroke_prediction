@@ -128,45 +128,69 @@ Bad Data: Erroneous records flagged for review.
 **Setup Instructions**
 
 1.	Clone the Repository:
-bash
+   
+2.	bash
+
 Copy code
-git clone https://github.com/your-username/heart_stroke_prediction.git
+
+git clone https://github.com/stroke_prediction.git
+
 cd heart_stroke_prediction
 
-2.	Create a Virtual Environment:
+3.	Create a Virtual Environment:
+   
 bash
+
 Copy code
+
 python -m venv venv
+
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-3.	Install Dependencies:
+4.	Install Dependencies:
+   
 bash
+
 Copy code
+
 pip install -r requirements.txt
 
 5.	Initialize PostgreSQL Database:
+   
 Set up a new PostgreSQL database for storing prediction records.
 
-7.	Start the API (FastAPI):
+6.	Start the API (FastAPI):
+    
 bash
 Copy code
 uvicorn app.main:app --reload
 
-9.	Launch the Web Application (Streamlit):
+7.	Launch the Web Application (Streamlit):
+   
 bash
+
 Copy code
+
 streamlit run app/webapp.py
 
-11.	Setup and Initialize Airflow:
+8.	Setup and Initialize Airflow:
+    
 bash
+
 Copy code
+
 pip install apache-airflow
+
 airflow db init
 
-13.	Run Airflow Webserver and Scheduler:
+9.	Run Airflow Webserver and Scheduler:
+    
 bash
+
 Copy code
+
 airflow webserver --port 8080
+
 airflow scheduler
 
 
@@ -202,8 +226,11 @@ curl -X POST 'http://127.0.0.1:8000/predict' \
 -d '{"age": 45, "bmi": 28.5, "hypertension": 1, "glucose_level": 150, ...}'
 
 •	Retrieve Past Predictions:
+
 bash
+
 Copy code
+
 curl -X GET 'http://127.0.0.1:8000/past-predictions'
 
 **Monitoring & Alerts**
