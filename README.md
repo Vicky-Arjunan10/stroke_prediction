@@ -1,85 +1,223 @@
 **Heart Stroke Risk Prediction**
-An end-to-end stroke prediction application using machine learning to assess patient risk based on health metrics
 
-Overview
+An end-to-end heart stroke risk prediction system designed to evaluate patients' risk levels based on key health metrics like BMI, Glucose level, hypertension, heart disease history, using a robust machine learning model and offering a full-featured web interface. The project encompasses automated data processing, scheduled predictions, data validation, and monitoring features to maintain data integrity and model performance.
 
-This project involves predicting heart-stroke prediction for men and women. The system integrates a web interface, machine learning API, database for storing predictions, scheduled jobs, data validation, and monitoring tools.
+**Overview**
 
-Project Components
-1. FastAPI (v0.95.2)**
-The API service built using FastAPI handles requests for making predictions based on user input (single and multiple predictions). It communicates with the machine learning model and the database for storing predictions.
+The Heart Stroke Risk Prediction project is an advanced system integrating various technologies to deliver reliable stroke risk assessments for patients. It features a web-based application for user interaction, an API for serving machine learning predictions, a database to store historical data, and scheduled jobs managed by Apache Airflow to automate data processing and monitoring.
 
-2. Streamlit (v1.19.0)
-The user interface is developed using Streamlit, providing an interactive web application where users can:
-- Make single predictions by filling in a form.
-- Make multiple predictions by uploading a CSV file.
-- View past predictions based on selected date ranges and sources (web app or scheduled).
+**Project Structure**
 
-3. Model Training
+The system is divided into multiple interconnected components:
 
-This project uses a Logistic Regression model to predict the risk of heart stroke based on various health factors such as age, BMI, hypertension, and glucose levels. The model is trained using a dataset containing relevant health records. We implemented scaling for numerical features using StandardScaler and handled categorical variables with a LabelEncoder. The final model is saved using joblib for deployment via FastAPI. Model accuracy and performance are evaluated using standard metrics like accuracy score, confusion matrix, and classification report.
+**Web Application & API**
 
-Key Libraries:
+**Frameworks Used:**
 
-scikit-learn: For model training and evaluation.
+Streamlit (v1.38.0) for the web interface
 
-pandas: For data handling and preprocessing.
+FastAPI (v0.112.2) for the backend API
 
-joblib: For model saving/loading.
+**Key Features:**
 
-4. PostgreSQL Database(v16)
-A PostgreSQL database is used to store predictions and the corresponding input features. This allows easy retrieval of historical predictions and serves as the central storage for all prediction data.
+**Interactive Form:** Users can enter individual health metrics and instantly get a prediction.
 
-5. Past Predictions
-The web application allows users to view previously made predictions. Users can filter these by date range and source (web-based or scheduled predictions).
+**Batch Predictions:** Users can upload CSV files for multiple predictions at once.
 
-6. Airflow DAGs (v2.6.3)
-An Airflow DAG (Directed Acyclic Graph) is scheduled to run every 5 minutes to:
-- Ingest new data.
-- Validate the data.
-- Make predictions on clean data.
-- Store predictions in the database.
+**History Access:** Users can view previously made predictions filtered by date or type.
 
-7. Data Ingestion
-- Raw Data: Data files are ingested as raw inputs and passed through a validation process.
-- Good Data: Data that passes validation is used for making predictions. Invalid data is flagged and stored separately.
+**Machine Learning Model**
 
+**Model Choice:** Logistic Regression, chosen for its interpretability and effectiveness in binary classification problems like stroke risk prediction.
 
-Installation Software Versions
+**Data Preprocessing:**
 
-- FastAPI: `v0.95.2`
-- Streamlit: `v1.19.0`
-- PostgreSQL: v16
-- Airflow: `v2.6.3`
-- Python: `v3.9+`
+Scaling:Numerical features such as age and BMI are scaled using StandardScaler.
 
-To run fast API
+Encoding:Categorical variables, like gender, are processed using LabelEncoder.
 
+**Performance Metrics:**
+
+Accuracy Score: Evaluates the overall effectiveness of the model.
+
+Confusion Matrix: Assesses the model's true positive and negative predictions.
+
+Classification Report: Provides precision, recall, and F1-score metrics.
+
+Model Storage:The trained model is serialized using joblib for efficient deployment.
+
+**Key Technologies & Libraries**
+
+•	scikit-learn: For model development and evaluation.
+
+•	pandas: For data manipulation and preprocessing.
+
+•	joblib: For saving and loading the machine learning model.
+
+•	PostgreSQL (v16): A robust database to store prediction records, ensuring data persistence and easy access.
+
+**Database Management**
+
+**PostgreSQL**
+
+•	The database serves as a central hub for storing all prediction data.
+
+•	Data Stored:
+
+  Input features submitted for predictions.
+
+  Output predictions (stroke risk results).
+
+  Metadata such as timestamp and source (manual input or batch).
+
+  Historical Predictions Interface
+
+•	Users can query the database through the web app to view past predictions.
+
+•	Advanced filtering options allow sorting by date and input method, enhancing the user experience.
+Automated Data Processing with Apache Airflow
+
+•	Apache Airflow (v2.6.3): Manages automated data ingestion and prediction workflows.
+
+**Airflow DAGs:**
+
+**Data Ingestion DAG:**
+
+Runs every 5 minutes to process new data.
+
+Validates incoming data (checking for missing values, outliers, etc.).
+
+Segregates valid data for prediction and flags invalid entries.
+
+**Prediction Job DAG:**
+
+Detects newly validated data.
+
+Sends data to the prediction API and stores the results in the database.
+
+**Data Validation Steps**
+
+**1.	Raw Data Ingestion:** Captures and processes data files from various sources.
+
+**2.	Data Quality Checks:**
+
+Missing Value Detection: Identifies incomplete records.
+
+Outlier Identification: Flags abnormally high or low values in metrics.
+
+Type Verification: Ensures data matches the expected formats.
+
+**3.	Data Segregation:**
+
+Good Data: Valid records ready for prediction.
+
+Bad Data: Erroneous records flagged for review.
+
+**Installation Guide**
+
+**Prerequisites**
+
+•	Python 3.9+
+
+•	PostgreSQL v16
+
+•	Docker 
+
+•	Apache Airflow v2.6.3
+
+**Setup Instructions**
+
+1.	Clone the Repository:
+bash
+Copy code
+git clone https://github.com/your-username/heart_stroke_prediction.git
+cd heart_stroke_prediction
+
+2.	Create a Virtual Environment:
+bash
+Copy code
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+3.	Install Dependencies:
+bash
+Copy code
+pip install -r requirements.txt
+
+5.	Initialize PostgreSQL Database:
+Set up a new PostgreSQL database for storing prediction records.
+
+7.	Start the API (FastAPI):
+bash
+Copy code
 uvicorn app.main:app --reload
 
-To run steamlit application
+9.	Launch the Web Application (Streamlit):
+bash
+Copy code
+streamlit run app/webapp.py
 
-streamlit run app.py
-
-To install and initialize airflow
-
+11.	Setup and Initialize Airflow:
+bash
+Copy code
 pip install apache-airflow
 airflow db init
 
-Start the airflow webserver and scheduler
-
+13.	Run Airflow Webserver and Scheduler:
+bash
+Copy code
 airflow webserver --port 8080
 airflow scheduler
 
 
-To run application
+**Running the Application**
 
-The web app (Streamlit) will run on http://localhost:8501.
+•	Web App (Streamlit): Accessible at http://localhost:8501
 
-FastAPI will serve at http://localhost:8000.
+•	API Service (FastAPI): Running on http://localhost:8000
 
-Airflow will be accessible at http://localhost:8080 to manage DAGs.
+•	Airflow UI: Manage DAGs at http://localhost:8080
 
+**Usage Guide**
 
+**Web Application**
 
+•	Single Prediction: Fill in the health metrics form for an instant stroke risk prediction.
+
+•	Multiple Prediction: Upload a CSV file to process multiple entries simultaneously.
+
+•	Past Predictions: Explore historical data and filter results based on various criteria.
+API Service
+
+•	Make Predictions:
+
+bash
+
+Copy code
+
+curl -X POST 'http://127.0.0.1:8000/predict' \
+
+-H 'Content-Type: application/json' \
+
+-d '{"age": 45, "bmi": 28.5, "hypertension": 1, "glucose_level": 150, ...}'
+
+•	Retrieve Past Predictions:
+bash
+Copy code
+curl -X GET 'http://127.0.0.1:8000/past-predictions'
+
+**Monitoring & Alerts**
+
+•	Data Integrity: Continuous checks via Airflow ensure data quality.
+
+•	Model Performance: Periodically review and update the model using new data insights.
+
+•	Alerts: The system raises alerts in case of data validation failures or unexpected model behavior.
+Future Enhancements
+
+•	Model Improvement: Experiment with more complex algorithms like Random Forest or Neural Networks.
+
+•	Enhanced Monitoring: Use tools like **Grafana** to visualize system health and model performance metrics.
+
+•	Deployment: Package the entire system using Docker for streamlined deployment.
 
