@@ -184,11 +184,15 @@ airflow scheduler
 
 **Running the Application**
 
-•	Web App (Streamlit): Accessible at http://localhost:8501
+Web App (Streamlit): Accessible at http://localhost:8501
 
-•	API Service (FastAPI): Running on http://localhost:8000
+API Service (FastAPI): Running on http://localhost:8000
 
-•	Airflow UI: Manage DAGs at http://localhost:8080
+Airflow UI: Manage DAGs at http://localhost:8080
+
+Grafana: http://localhost:3000
+
+
 
 **Usage Guide**
 
