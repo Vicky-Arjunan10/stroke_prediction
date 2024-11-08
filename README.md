@@ -131,8 +131,6 @@ Bad Data: Erroneous records flagged for review.
    
 2.	bash
 
-Copy code
-
 git clone https://github.com/stroke_prediction.git
 
 cd heart_stroke_prediction
@@ -141,8 +139,6 @@ cd heart_stroke_prediction
    
 bash
 
-Copy code
-
 python -m venv venv
 
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -150,8 +146,6 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 4.	Install Dependencies:
    
 bash
-
-Copy code
 
 pip install -r requirements.txt
 
@@ -162,22 +156,18 @@ Set up a new PostgreSQL database for storing prediction records.
 6.	Start the API (FastAPI):
     
 bash
-Copy code
+
 uvicorn app.main:app --reload
 
 7.	Launch the Web Application (Streamlit):
    
 bash
 
-Copy code
-
 streamlit run app/webapp.py
 
 8.	Setup and Initialize Airflow:
     
 bash
-
-Copy code
 
 pip install apache-airflow
 
@@ -186,8 +176,6 @@ airflow db init
 9.	Run Airflow Webserver and Scheduler:
     
 bash
-
-Copy code
 
 airflow webserver --port 8080
 
@@ -217,8 +205,6 @@ API Service
 
 bash
 
-Copy code
-
 curl -X POST 'http://127.0.0.1:8000/predict' \
 
 -H 'Content-Type: application/json' \
@@ -228,8 +214,6 @@ curl -X POST 'http://127.0.0.1:8000/predict' \
 •	Retrieve Past Predictions:
 
 bash
-
-Copy code
 
 curl -X GET 'http://127.0.0.1:8000/past-predictions'
 
