@@ -24,18 +24,24 @@ for file in os.listdir(destination_folder):
 input_file = os.path.join(source_folder, 'raw_data.csv')
 data = pd.read_csv(input_file)
 
-# Calculate the number of rows per file
-rows_per_file = 1000
+# Get the total number of rows in the data
+total_rows = len(data)
 
-# Split and save into 10 files in the raw_data folder
-for i in range(0, len(data), rows_per_file):
+# Specify the number of files you want to generate
+num_files = int(input("Enter the number of files to generate: "))
+
+# Calculate the number of rows per file based on the specified number of files
+rows_per_file = total_rows // num_files + (1 if total_rows % num_files else 0)
+
+# Split and save into the specified number of files in the raw_data folder
+for i in range(0, total_rows, rows_per_file):
     # Extract the chunk of data for each file
     chunk = data[i:i + rows_per_file]
-    
+
     # Generate the output file name
-    output_file = os.path.join(destination_folder, f'output_{i//rows_per_file + 1}.csv')
-    
+    output_file = os.path.join(destination_folder, f'output_{i // rows_per_file + 1}.csv')
+
     # Save the chunk to a new CSV file
     chunk.to_csv(output_file, index=False)
-    
+
     print(f'Saved {output_file}')
